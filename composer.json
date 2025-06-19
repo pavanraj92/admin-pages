@@ -1,0 +1,22 @@
+{
+    "name": "admin/pages",
+    "description": "Create and manage static content pages (e.g., About Us, Terms & Conditions) to keep the site content updated and organized.",
+    "type": "library",
+    "version": "1.0.0",  
+    "license": "MIT",
+    "autoload": {
+      "psr-4": {
+        "admin\\pages\\": "src/"
+      }
+    },
+    "extra": { 
+      "laravel": {
+        "providers": [
+          "admin\\pages\\PagesModuleServiceProvider"
+        ]
+      }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+  }
+  
