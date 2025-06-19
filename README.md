@@ -10,10 +10,23 @@ This package provides an Admin Page (CMS) Manager for managing content pages wit
 - SEO-friendly URLs and metadata management
 - User permissions and access control
 
+## Need to update `composer.json` file
+
+Add the following to your `composer.json` to use the package from a local path:
+
+```json
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/pavanraj92/admin-pages.git"
+    }
+]
+```
+
 ## Installation
 
 ```bash
-composer require admin/pages
+composer require admin/pages --dev
 ```
 
 ## Usage
