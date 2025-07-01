@@ -1,6 +1,10 @@
 @extends('admin::admin.layouts.master')
 
 @section('title', 'Pages Management')
+@section('meta_description')
+Manage pages in the admin panel: create, edit, update, and control page titles, content, and publication status.
+@endsection
+
 
 @section('page-title', 'Page Details')
 
@@ -22,20 +26,20 @@
                                 <tbody>
                                     <tr>
                                         <th scope="row">Title</th>
-                                        <td scope="col">{{ $page->title ?? 'N/A' }}</td>                                   
-                                    </tr>                                
+                                        <td scope="col">{{ $page->title ?? 'N/A' }}</td>
+                                    </tr>
                                     <tr>
                                         <th scope="row">Content</th>
-                                        <td scope="col">{{ $page->content ?? 'N/A' }}</td>                                   
-                                    </tr>                                
+                                        <td scope="col">{{ $page->content ?? 'N/A' }}</td>
+                                    </tr>
                                     <tr>
                                         <th scope="row">Status</th>
                                         <td scope="col">{!! $page->status ? config('pages.constants.aryPageStatusLabel')[$page->status] ?? 'N/A' : 'N/A' !!}</td>
-                                    </tr>                                
+                                    </tr>
                                     <tr>
                                         <th scope="row">Created At</th>
-                                        <td scope="col">{{ $page->created_at ?? 'N/A' }}</td>                                   
-                                    </tr>                                
+                                        <td scope="col">{{ $page->created_at ?? 'N/A' }}</td>
+                                    </tr>
                                 </tbody>
                             </table>   
                                              

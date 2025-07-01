@@ -1,6 +1,9 @@
 @extends('admin::admin.layouts.master')
 
 @section('title', 'Pages Management')
+@section('meta_description')
+Manage pages in the admin panel: create, edit, update, and control page titles, content, and publication status.
+@endsection
 
 @section('page-title', 'Manage Pages')
 
@@ -120,7 +123,7 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="4" class="text-center">No pages found.</td>
+                                            <td colspan="5" class="text-center">No pages found.</td>
                                         </tr>
                                     @endif
                                 </tbody>
