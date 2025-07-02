@@ -22,11 +22,15 @@ Manage pages in the admin panel: create, edit, update, and control page titles, 
                 <div class="card">                    
                     <div class="table-responsive">
                          <div class="card-body">      
-                            <table class="table table-bordered table-responsive-lg">                            
+                            <table class="table table-responsive-lg table-no-border">
                                 <tbody>
                                     <tr>
                                         <th scope="row">Title</th>
                                         <td scope="col">{{ $page->title ?? 'N/A' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Slug</th>
+                                        <td scope="col">{{ $page->slug ?? 'N/A' }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Content</th>

@@ -23,7 +23,7 @@ class PagesModuleServiceProvider extends ServiceProvider
             __DIR__.'/../resources/views' => resource_path('views/admin/page'),
             __DIR__ . '/../src/Controllers' => app_path('Http/Controllers/Admin/PageManager'),
             __DIR__ . '/../src/Models' => app_path('Models/Admin/Page'),
-            __DIR__ . '/routes/web.php' => base_path('routes/admin/admin_page.php'),
+            __DIR__ . '/routes/web.php' => base_path('routes/admin/page.php'),
         ], 'page');
 
         $this->registerAdminRoutes();
@@ -36,8 +36,12 @@ class PagesModuleServiceProvider extends ServiceProvider
             return; // Avoid errors before migration
         }
 
-        $slug = DB::table('admins')->latest()->value('website_slug') ?? 'admin';
-
+        $admin = DB::table('admins')
+            ->orderBy('created_at', 'asc')
+            ->first();
+            
+        $slug = $admin->website_slug ?? 'admin';
+        
         Route::middleware('web')
             ->prefix("{$slug}/admin") // dynamic prefix
             ->group(function () {

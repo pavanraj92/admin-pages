@@ -62,6 +62,7 @@ Manage pages in the admin panel: create, edit, update, and control page titles, 
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Title</th>
+                                        <th scope="col">Slug</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Created At</th>
                                         <th scope="col">Action</th>
@@ -75,7 +76,8 @@ Manage pages in the admin panel: create, edit, update, and control page titles, 
                                         @foreach ($pages as $page)
                                             <tr>
                                                 <th scope="row">{{ $i }}</th>
-                                                <td>{{ $page->title }}</td>
+                                                <td>{{ $page->title ?? '' }}</td>
+                                                <td>{{ $page->slug ?? '' }}</td>
                                                 <td>
                                                     <!-- create update status functionality-->
                                                     @if ($page->status == 'published')
@@ -123,7 +125,7 @@ Manage pages in the admin panel: create, edit, update, and control page titles, 
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="5" class="text-center">No pages found.</td>
+                                            <td colspan="6" class="text-center">No pages found.</td>
                                         </tr>
                                     @endif
                                 </tbody>
