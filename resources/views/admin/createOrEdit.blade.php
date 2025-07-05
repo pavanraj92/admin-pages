@@ -28,7 +28,7 @@ Create, edit, or update pages in the admin panel. Manage page titles, content, a
                             <div class="col-md-6">                                
                                 <div class="form-group">
                                     <label>Title</label>
-                                    <input type="text" name="title" class="form-control"
+                                    <input type="text" name="title" class="form-control alphabets-only"
                                         value="{{ $page?->title ?? old('title') }}" required>
                                     @error('title')
                                         <div class="text-danger validation-error">{{ $message }}</div>
@@ -117,13 +117,22 @@ Create, edit, or update pages in the admin panel. Manage page titles, content, a
             // Initialize Select2 for any select elements with the class 'select2'
             $('.select2').select2();
 
+            $.validator.addMethod(
+                "alphabetsOnly",
+                function (value, element) {
+                    return this.optional(element) || /^[a-zA-Z\s]+$/.test(value);
+                },
+                "Please enter letters only"
+            );
+
             //jquery validation for the form
             $('#pageForm').validate({
                 ignore: [],
                 rules: {
                     title: {
                         required: true,
-                        minlength: 3
+                        minlength: 3,
+                        alphabetsOnly: true
                     },
                     content: {
                         required: true,
