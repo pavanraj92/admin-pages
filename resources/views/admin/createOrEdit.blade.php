@@ -28,7 +28,7 @@ Create, edit, or update pages in the admin panel. Manage page titles, content, a
                             <div class="col-md-6">                                
                                 <div class="form-group">
                                     <label>Title</label>
-                                    <input type="text" name="title" class="form-control alphabets-only"
+                                    <input type="text" name="title" class="form-control"
                                         value="{{ $page?->title ?? old('title') }}" required>
                                     @error('title')
                                         <div class="text-danger validation-error">{{ $message }}</div>
@@ -60,7 +60,7 @@ Create, edit, or update pages in the admin panel. Manage page titles, content, a
                         </div>
                        
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary" id="saveBtn">Save</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                             <a href="{{ route('admin.pages.index') }}" class="btn btn-secondary">Back</a>
                         </div>
                     </form>
@@ -87,29 +87,18 @@ Create, edit, or update pages in the admin panel. Manage page titles, content, a
     <!-- Select2 CSS & JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+    <!-- Initialize CKEditor -->
     <script>
-        let ckEditorInstance;
-    
-        ClassicEditor
-        .create(document.querySelector('#content'))
-        .then(editor => {
-            ckEditorInstance = editor;
-    
-            // optional styling
-            editor.ui.view.editable.element.style.minHeight = '250px';
-            editor.ui.view.editable.element.style.maxHeight = '250px';
-            editor.ui.view.editable.element.style.overflowY = 'auto';
-    
-            // 🔥 Trigger validation on typing
-            editor.model.document.on('change:data', () => {
-                const contentVal = editor.getData();
-                $('#content').val(contentVal); // keep textarea updated
-                $('#content').trigger('keyup'); // trigger validation manually
-            });
-        })
-        .catch(error => {
-            console.error(error);
-        });
+    ClassicEditor
+    .create(document.querySelector('#content'))
+    .then(editor => {
+        editor.ui.view.editable.element.style.minHeight = '250px';
+        editor.ui.view.editable.element.style.maxHeight = '250px';
+        editor.ui.view.editable.element.style.overflowY = 'auto'; // optional scroll
+    })
+    .catch(error => {
+        console.error(error);
+    });
     </script>
 
     <script>
@@ -117,22 +106,12 @@ Create, edit, or update pages in the admin panel. Manage page titles, content, a
             // Initialize Select2 for any select elements with the class 'select2'
             $('.select2').select2();
 
-            $.validator.addMethod(
-                "alphabetsOnly",
-                function (value, element) {
-                    return this.optional(element) || /^[a-zA-Z\s]+$/.test(value);
-                },
-                "Please enter letters only"
-            );
-
             //jquery validation for the form
             $('#pageForm').validate({
-                ignore: [],
                 rules: {
                     title: {
                         required: true,
-                        minlength: 3,
-                        alphabetsOnly: true
+                        minlength: 3
                     },
                     content: {
                         required: true,
@@ -155,26 +134,11 @@ Create, edit, or update pages in the admin panel. Manage page titles, content, a
                         required: "Please select a status"
                     }
                 },
-                submitHandler: function(form) {
-                    // Update textarea before submit
-                    if (ckEditorInstance) {
-                        $('#content').val(ckEditorInstance.getData());
-                    }
-                    const $btn = $('#saveBtn');
-                    $btn.prop('disabled', true).text('Saving...');
-
-                    // Now submit
-                    form.submit();
-                },
                 errorElement: 'div',
                 errorClass: 'text-danger custom-error',
                 errorPlacement: function(error, element) {
                     $('.validation-error').css('display', 'none'); // remove existing error messages
-                    if (element.attr("id") === "content") {
-                        error.insertAfter($('.ck-editor')); // show below CKEditor UI
-                    } else {
-                        error.insertAfter(element);
-                    }
+                    error.addClass('mt-1').insertAfter(element);
                 }
             });
         });
