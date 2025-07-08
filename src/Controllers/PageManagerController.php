@@ -17,7 +17,7 @@ class PageManagerController extends Controller
                 filter($request->query('keyword'))
                 ->filterByStatus($request->query('status'))
                 ->orderBy('created_at', 'desc')
-                ->paginate(5)
+                ->paginate(Page::getPerPageLimit())
                 ->withQueryString();
 
             return view('page::admin.index', compact('pages'));
