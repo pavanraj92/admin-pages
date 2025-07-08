@@ -33,7 +33,8 @@ composer require admin/pages --dev
 
 1. Publish the configuration and migration files:
     ```bash
-    php artisan vendor:publish --tag=page
+    php artisan pages:publish --force
+    composer dump-autoload
     php artisan migrate
     ```
 2. Access the CMS manager from your admin dashboard.
