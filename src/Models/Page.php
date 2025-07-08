@@ -34,7 +34,7 @@ class Page extends Model
         });
 
         static::updating(function ($page) {
-            if ($page->isDirty('title')) {
+            if (empty($page->slug)) {
                 $page->slug = Str::slug($page->title);
             }
         });
