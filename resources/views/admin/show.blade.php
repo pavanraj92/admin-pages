@@ -1,16 +1,12 @@
 @extends('admin::admin.layouts.master')
 
-@section('title', 'Pages Management')
-@section('meta_description')
-Manage pages in the admin panel: create, edit, update, and control page titles, content, and publication status.
-@endsection
+@section('title', 'CMS Pages Management')
 
-
-@section('page-title', 'Page Details')
+@section('page-title', 'CMS Page Details')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.pages.index') }}">Manage Pages</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Page Details</li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.pages.index') }}">Manage CMS Pages</a></li>
+    <li class="breadcrumb-item active" aria-current="page">CMS Page Details</li>
 @endsection
 
 @section('content')
@@ -30,16 +26,18 @@ Manage pages in the admin panel: create, edit, update, and control page titles, 
                                     </tr>
                                     <tr>
                                         <th scope="row">Content</th>
-                                        <td scope="col">{{ $page->content ?? 'N/A' }}</td>
-                                    </tr>
+                                        <td scope="col">{{ $page->content ?? 'N/A' }}</td>                                   
+                                    </tr>                                
                                     <tr>
                                         <th scope="row">Status</th>
-                                        <td scope="col">{!! $page->status ? config('pages.constants.aryPageStatusLabel')[$page->status] ?? 'N/A' : 'N/A' !!}</td>
-                                    </tr>
+                                        <td scope="col">{!! $page->status ? config('admin.constants.aryPageStatusLabel')[$page->status] ?? 'N/A' : 'N/A' !!}</td>
+                                    </tr>                                
                                     <tr>
                                         <th scope="row">Created At</th>
-                                        <td scope="col">{{ $page->created_at ?? 'N/A' }}</td>
-                                    </tr>
+                                        <td scope="col">{{ $page->created_at
+                                            ? $page->created_at->format(config('GET.admin_date_time_format') ?? 'Y-m-d H:i:s')
+                                            : '—' }}</td>                                   
+                                    </tr>                                
                                 </tbody>
                             </table>   
                                              

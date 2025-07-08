@@ -1,14 +1,11 @@
 @extends('admin::admin.layouts.master')
 
-@section('title', 'Pages Management')
-@section('meta_description')
-Manage pages in the admin panel: create, edit, update, and control page titles, content, and publication status.
-@endsection
+@section('title', 'CMS Pages Management')
 
-@section('page-title', 'Manage Pages')
+@section('page-title', 'Manage CMS Pages')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page">Manage Pages</li>
+    <li class="breadcrumb-item active" aria-current="page">Manage CMS Pages</li>
 @endsection
 
 @section('content')
@@ -25,7 +22,7 @@ Manage pages in the admin panel: create, edit, update, and control page titles, 
                                 <div class="form-group">
                                     <label for="title">Title</label>
                                     <input type="text" name="keyword" id="keyword" class="form-control"
-                                        value="{{ app('request')->query('keyword') }}" placeholder="Enter title">                                   
+                                        value="{{ app('request')->query('keyword') }}" placeholder="Enter title">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -33,9 +30,13 @@ Manage pages in the admin panel: create, edit, update, and control page titles, 
                                     <label for="status">Status</label>
                                     <select name="status" id="status" class="form-control select2">
                                         <option value="">All</option>
-                                        <option value="draft" {{ app('request')->query('status') == 'draft' ? 'selected' : '' }}>Draft</option>
-                                        <option value="published" {{ app('request')->query('status') == 'published' ? 'selected' : '' }}>Published</option>
-                                    </select>                                   
+                                        <option value="draft"
+                                            {{ app('request')->query('status') == 'draft' ? 'selected' : '' }}>Draft
+                                        </option>
+                                        <option value="published"
+                                            {{ app('request')->query('status') == 'published' ? 'selected' : '' }}>Published
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +56,7 @@ Manage pages in the admin panel: create, edit, update, and control page titles, 
                         <div class="text-right">
                             <a href="{{ route('admin.pages.create') }}" class="btn btn-primary mb-3">Create New Page</a>
                         </div>
-                    
+
                         <div class="table-responsive">
                             <table class="table">
                                 <thead class="thead-light">
@@ -79,14 +80,15 @@ Manage pages in the admin panel: create, edit, update, and control page titles, 
                                                 <td>
                                                     <!-- create update status functionality-->
                                                     @if ($page->status == 'published')
-                                                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top"
-                                                            title="Click to change status to draft"
+                                                        <a href="javascript:void(0)" data-toggle="tooltip"
+                                                            data-placement="top" title="Click to change status to draft"
                                                             data-url="{{ route('admin.pages.updateStatus') }}"
-                                                            data-method="POST" data-status="draft" data-id="{{ $page->id }}"
+                                                            data-method="POST" data-status="draft"
+                                                            data-id="{{ $page->id }}"
                                                             class="btn btn-success btn-sm update-status">Published</a>
                                                     @else
-                                                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top"
-                                                            title="Click to change status to published"
+                                                        <a href="javascript:void(0)" data-toggle="tooltip"
+                                                            data-placement="top" title="Click to change status to published"
                                                             data-url="{{ route('admin.pages.updateStatus') }}"
                                                             data-method="POST" data-status="published"
                                                             data-id="{{ $page->id }}"
@@ -94,27 +96,23 @@ Manage pages in the admin panel: create, edit, update, and control page titles, 
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    {{ $page->created_at->format('Y-m-d H:i:s') }}
+                                                    {{ $page->created_at
+                                                        ? $page->created_at->format(config('GET.admin_date_time_format') ?? 'Y-m-d H:i:s')
+                                                        : '—' }}
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('admin.pages.edit', $page) }}"
-                                                        data-toggle="tooltip"
-                                                        data-placement="top"
-                                                        title="Edit this record"
+                                                    <a href="{{ route('admin.pages.edit', $page) }}" data-toggle="tooltip"
+                                                        data-placement="top" title="Edit this record"
                                                         class="btn btn-success btn-sm"><i class="mdi mdi-pencil"></i></a>
-                                                    <a href="{{ route('admin.pages.show', $page) }}" 
-                                                        data-toggle="tooltip"
-                                                        data-placement="top"
-                                                        title="View this record"
+                                                    <a href="{{ route('admin.pages.show', $page) }}" data-toggle="tooltip"
+                                                        data-placement="top" title="View this record"
                                                         class="btn btn-warning btn-sm"><i class="mdi mdi-eye"></i></a>
-                                                    <a href="javascript:void(0)" 
-                                                        data-toggle="tooltip" 
-                                                        data-placement="top"
-                                                        title="Delete this record" 
+                                                    <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top"
+                                                        title="Delete this record"
                                                         data-url="{{ route('admin.pages.destroy', $page) }}"
-                                                        data-text="Are you sure you want to delete this record?"                                                    
-                                                        data-method="DELETE"
-                                                        class="btn btn-danger btn-sm delete-record" ><i class="mdi mdi-delete"></i></a>
+                                                        data-text="Are you sure you want to delete this record?"
+                                                        data-method="DELETE" class="btn btn-danger btn-sm delete-record"><i
+                                                            class="mdi mdi-delete"></i></a>
                                                 </td>
                                             </tr>
                                             @php
@@ -132,8 +130,8 @@ Manage pages in the admin panel: create, edit, update, and control page titles, 
                             <!--pagination move the right side-->
                             @if ($pages->count() > 0)
                                 {{ $pages->links('admin::pagination.custom-admin-pagination') }}
-                            @endif                        
-                            
+                            @endif
+
                         </div>
                     </div>
                 </div>
