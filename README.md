@@ -26,7 +26,7 @@ Add the following to your `composer.json` to use the package from a local path:
 ## Installation
 
 ```bash
-composer require admin/pages --dev
+composer require admin/pages:@dev
 ```
 
 ## Usage
