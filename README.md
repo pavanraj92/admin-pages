@@ -10,6 +10,28 @@ This package provides an Admin Page (CMS) Manager for managing content pages wit
 - SEO-friendly URLs and metadata management
 - User permissions and access control
 
+## Usage
+
+1. **Create**: Add a new page by providing a title, slug, content, and optional metadata.
+2. **Read**: View all pages in a paginated list or access individual page details.
+3. **Update**: Edit page content, metadata, or organizational structure.
+4. **Delete**: Remove pages that are no longer needed.
+
+## Example Endpoints
+
+| Method | Endpoint         | Description              |
+|--------|------------------|--------------------------|
+| GET    | `/pages`         | List all pages           |
+| POST   | `/pages`         | Create a new page        |
+| GET    | `/pages/{id}`    | Get page details         |
+| PUT    | `/pages/{id}`    | Update a page            |
+| DELETE | `/pages/{id}`    | Delete a page            |
+
+## Requirements
+
+- PHP 8.2+
+- Laravel Framework
+
 ## Need to update `composer.json` file
 
 Add the following to your `composer.json` to use the package from a local path:
@@ -58,4 +80,4 @@ You can customize views, routes, and permissions by editing the configuration fi
 
 ## License
 
-This package is open-sourced software licensed under the [MIT license](LICENSE).write code in the readme.md file regarding to the admin/page(CMS) manager
+This package is open-sourced software licensed under the Dotsquares.write code in the readme.md file regarding to the admin/page(CMS) manager
