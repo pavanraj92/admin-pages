@@ -10,11 +10,19 @@ use admin\pages\Models\Page;
 
 class PageManagerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admincan_permission:pages_manager_list')->only(['index']);
+        $this->middleware('admincan_permission:pages_manager_create')->only(['create', 'store']);
+        $this->middleware('admincan_permission:pages_manager_edit')->only(['edit', 'update']);
+        $this->middleware('admincan_permission:pages_manager_view')->only(['show']);
+        $this->middleware('admincan_permission:pages_manager_delete')->only(['destroy']);
+    }
+
     public function index(Request $request)
     {
         try {
-            $pages = Page::
-                filter($request->query('keyword'))
+            $pages = Page::filter($request->query('keyword'))
                 ->filterByStatus($request->query('status'))
                 ->orderBy('created_at', 'desc')
                 ->paginate(Page::getPerPageLimit())
