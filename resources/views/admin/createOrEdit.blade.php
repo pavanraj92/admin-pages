@@ -1,15 +1,12 @@
 @extends('admin::admin.layouts.master')
 
 @section('title', 'Pages Management')
-@section('meta_description')
-Create, edit, or update pages in the admin panel. Manage page titles, content, and status.
-@endsection
 
-@section('page-title', 'Create Page')
+@section('page-title', isset($page) ? 'Edit Page' : 'Create Page')
 
 @section('breadcrumb')
     <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.pages.index') }}">Manage Pages</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Create Page</li>
+    <li class="breadcrumb-item active" aria-current="page">{{isset($page) ? 'Edit Page' : 'Create Page'}}</li>
 @endsection
 
 @section('content')
