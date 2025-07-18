@@ -18,6 +18,8 @@ class PagesModuleServiceProvider extends ServiceProvider
             resource_path('views/admin/page'), // Published views second
             __DIR__ . '/../resources/views'      // Package views as fallback
         ], 'page');
+
+        $this->mergeConfigFrom(__DIR__.'/../config/pages.php', 'pages.constants');
         
         // Also register module views with a specific namespace for explicit usage
         if (is_dir(base_path('Modules/Pages/resources/views'))) {
