@@ -5,7 +5,7 @@
 @section('page-title', isset($page) ? 'Edit Page' : 'Create Page')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.pages.index') }}">Manage Pages</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.pages.index') }}">CMS Pages Manager</a></li>
     <li class="breadcrumb-item active" aria-current="page">{{isset($page) ? 'Edit Page' : 'Create Page'}}</li>
 @endsection
 

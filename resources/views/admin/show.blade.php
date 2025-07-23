@@ -5,7 +5,7 @@
 @section('page-title', 'CMS Page Details')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.pages.index') }}">Manage CMS Pages</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.pages.index') }}">CMS Page Manager</a></li>
     <li class="breadcrumb-item active" aria-current="page">CMS Page Details</li>
 @endsection
 
@@ -18,19 +18,19 @@
                 <div class="card">                    
                     <div class="table-responsive">
                          <div class="card-body">      
-                            <table class="table table-responsive-lg table-no-border">                  
+                            <table class="table table-striped">
                                 <tbody>
                                     <tr>
                                         <th scope="row">Title</th>
-                                        <td scope="col">{{ $page->title ?? 'N/A' }}</td>
-                                    </tr>
+                                        <td scope="col">{{ $page->title ?? 'N/A' }}</td>                                   
+                                    </tr>                                
                                     <tr>
                                         <th scope="row">Content</th>
-                                        <td scope="col">{!! $page->content ?? 'N/A' !!}</td>                                   
+                                        <td scope="col">{{ $page->content ?? 'N/A' }}</td>                                   
                                     </tr>                                
                                     <tr>
                                         <th scope="row">Status</th>
-                                        <td scope="col">{!! $page->status ? config('pages.constants.aryPageStatusLabel')[$page->status] ?? 'N/A' : 'N/A' !!}</td>
+                                        <td scope="col">{!! $page->status ? config('admin.constants.aryPageStatusLabel')[$page->status] ?? 'N/A' : 'N/A' !!}</td>
                                     </tr>                                
                                     <tr>
                                         <th scope="row">Created At</th>

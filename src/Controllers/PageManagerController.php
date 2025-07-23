@@ -24,7 +24,8 @@ class PageManagerController extends Controller
         try {
             $pages = Page::filter($request->query('keyword'))
                 ->filterByStatus($request->query('status'))
-                ->orderBy('created_at', 'desc')
+                ->sortable()
+                ->latest()
                 ->paginate(Page::getPerPageLimit())
                 ->withQueryString();
 
