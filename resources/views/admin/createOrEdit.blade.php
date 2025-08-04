@@ -55,6 +55,8 @@
                                 <div class="text-danger validation-error">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        @include('admin::admin.seo', ['seo' => $seo ?? null])
                        
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary" id="saveBtn">{{isset($page) ? 'Update' : 'Save'}}</button>

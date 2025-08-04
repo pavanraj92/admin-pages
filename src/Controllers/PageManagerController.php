@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 use admin\pages\Requests\PageCreateRequest;
 use admin\pages\Requests\PageUpdateRequest;
 use admin\pages\Models\Page;
+use admin\admin_auth\Traits\HasSeo;
 
 class PageManagerController extends Controller
 {
+    use HasSeo;
+
     public function __construct()
     {
         $this->middleware('admincan_permission:pages_manager_list')->only(['index']);
@@ -38,7 +41,8 @@ class PageManagerController extends Controller
     public function create()
     {
         try {
-            return view('page::admin.createOrEdit');
+            $seo = null;
+            return view('page::admin.createOrEdit', compact('seo'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load pages: ' . $e->getMessage());
         }
@@ -49,7 +53,8 @@ class PageManagerController extends Controller
         try {
             $requestData = $request->validated();
 
-            Page::create($requestData);
+            $page = Page::create($requestData);
+            $this->saveSeo(Page::class, $page->id, $requestData);
             return redirect()->route('admin.pages.index')->with('success', 'Page created successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load pages: ' . $e->getMessage());
@@ -71,7 +76,8 @@ class PageManagerController extends Controller
     public function edit(Page $page)
     {
         try {
-            return view('page::admin.createOrEdit', compact('page'));
+            $seo = $this->getSeo($page);
+            return view('page::admin.createOrEdit', compact('page', 'seo'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load page for editing: ' . $e->getMessage());
         }
@@ -83,6 +89,7 @@ class PageManagerController extends Controller
             $requestData = $request->validated();
 
             $page->update($requestData);
+             $this->saveSeo(Page::class, $page->id, $requestData);
             return redirect()->route('admin.pages.index')->with('success', 'Page updated successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load page for editing: ' . $e->getMessage());

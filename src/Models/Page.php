@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Config;
 use Kyslik\ColumnSortable\Sortable;
+use admin\admin_auth\Models\Seo;
 
 class Page extends Model
 {
@@ -49,6 +50,12 @@ class Page extends Model
             if (empty($page->slug)) {
                 $page->slug = Str::slug($page->title);
             }
+        });
+
+        static::deleting(function ($page) {
+            Seo::where('model_name', self::class)
+                ->where('model_record_id', $page->id)
+                ->delete();
         });
     }
 
