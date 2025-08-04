@@ -5,24 +5,25 @@
 @section('page-title', isset($page) ? 'Edit Page' : 'Create Page')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.pages.index') }}">CMS Pages Manager</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{isset($page) ? 'Edit Page' : 'Create Page'}}</li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.pages.index') }}">CMS Pages Manager</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ isset($page) ? 'Edit Page' : 'Create Page' }}</li>
 @endsection
 
 @section('content')
     <div class="container-fluid">
-        <!-- Start Page Content -->
-        <div class="row">
-            <div class="col-12">
-                <div class="card card-body">
-                    <form action="{{ isset($page) ? route('admin.pages.update', $page->id) : route('admin.pages.store') }}"
-                        method="POST" id="pageForm">
-                        @if (isset($page))
-                            @method('PUT')
-                        @endif
-                        @csrf
+        <form action="{{ isset($page) ? route('admin.pages.update', $page->id) : route('admin.pages.store') }}" method="POST"
+            id="pageForm">
+            @if (isset($page))
+                @method('PUT')
+            @endif
+            @csrf
+            <!-- Start Page Content -->
+            <div class="row">
+                <div class="col-8">
+                    <div class="card card-body">
                         <div class="row">
-                            <div class="col-md-6">                                
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Title<span class="text-danger">*</span></label>
                                     <input type="text" name="title" class="form-control"
@@ -33,11 +34,15 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                 <div class="form-group">
+                                <div class="form-group">
                                     <label>Status<span class="text-danger">*</span></label>
                                     <select name="status" class="form-control select2" required>
-                                        <option value="draft" {{ (($page?->status ?? old('status')) == 'draft') ? 'selected' : '' }}>Draft</option>
-                                        <option value="published" {{ (($page?->status ?? old('status')) == 'published') ? 'selected' : '' }}>Published</option>
+                                        <option value="draft"
+                                            {{ ($page?->status ?? old('status')) == 'draft' ? 'selected' : '' }}>Draft
+                                        </option>
+                                        <option value="published"
+                                            {{ ($page?->status ?? old('status')) == 'published' ? 'selected' : '' }}>
+                                            Published</option>
                                     </select>
                                     @error('status')
                                         <div class="text-danger validation-error">{{ $message }}</div>
@@ -45,8 +50,6 @@
                                 </div>
                             </div>
                         </div>
-
-
 
                         <div class="form-group">
                             <label>Content<span class="text-danger">*</span></label>
@@ -56,17 +59,21 @@
                             @enderror
                         </div>
 
-                        @include('admin::admin.seo', ['seo' => $seo ?? null])
-                       
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary" id="saveBtn">{{isset($page) ? 'Update' : 'Save'}}</button>
+                            <button type="submit" class="btn btn-primary"
+                                id="saveBtn">{{ isset($page) ? 'Update' : 'Save' }}</button>
                             <a href="{{ route('admin.pages.index') }}" class="btn btn-secondary">Back</a>
                         </div>
-                    </form>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    @include('admin::admin.seo_meta_data.seo', ['seo' => $seo ?? null])
                 </div>
             </div>
-        </div>
-        <!-- End PAge Content -->
+            <!-- End PAge Content -->
+        </form>
     </div>
 @endsection
 
@@ -75,7 +82,7 @@
     <!-- Select2 CSS & JS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- Custom CSS for the page -->
-    <link rel="stylesheet" href="{{ asset('backend/custom.css') }}">           
+    <link rel="stylesheet" href="{{ asset('backend/custom.css') }}">
 @endpush
 
 @push('scripts')
@@ -88,28 +95,28 @@
 
     <!-- Initialize CKEditor -->
     <script>
-   let ckEditorInstance;
+        let ckEditorInstance;
 
-    ClassicEditor
-    .create(document.querySelector('#content'))
-    .then(editor => {
-        ckEditorInstance = editor;
+        ClassicEditor
+            .create(document.querySelector('#content'))
+            .then(editor => {
+                ckEditorInstance = editor;
 
-        // optional styling
-        editor.ui.view.editable.element.style.minHeight = '250px';
-        editor.ui.view.editable.element.style.maxHeight = '250px';
-        editor.ui.view.editable.element.style.overflowY = 'auto';
+                // optional styling
+                editor.ui.view.editable.element.style.minHeight = '250px';
+                editor.ui.view.editable.element.style.maxHeight = '250px';
+                editor.ui.view.editable.element.style.overflowY = 'auto';
 
-        // 🔥 Trigger validation on typing
-        editor.model.document.on('change:data', () => {
-            const contentVal = editor.getData();
-            $('#content').val(contentVal); // keep textarea updated
-            $('#content').trigger('keyup'); // trigger validation manually
-        });
-    })
-    .catch(error => {
-        console.error(error);
-    });
+                // 🔥 Trigger validation on typing
+                editor.model.document.on('change:data', () => {
+                    const contentVal = editor.getData();
+                    $('#content').val(contentVal); // keep textarea updated
+                    $('#content').trigger('keyup'); // trigger validation manually
+                });
+            })
+            .catch(error => {
+                console.error(error);
+            });
     </script>
 
     <script>
@@ -157,7 +164,7 @@
                     } else {
                         $btn.prop('disabled', true).text('Saving...');
                     }
-                    
+
                     // Now submit
                     form.submit();
                 },

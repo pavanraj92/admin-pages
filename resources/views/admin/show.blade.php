@@ -14,7 +14,7 @@
     <div class="container-fluid">
         <!-- Start Page Content -->
         <div class="row">
-            <div class="col-12">
+            <div class="col-8">
                 <div class="card">                    
                     <div class="table-responsive">
                          <div class="card-body">      
@@ -46,6 +46,7 @@
                     </div>
                 </div>
             </div>
+            @include('admin::admin.seo_meta_data.view', ['page' => $page])
         </div>
         <!-- End PAge Content -->
     </div>

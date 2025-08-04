@@ -67,7 +67,8 @@ class PageManagerController extends Controller
     public function show(Page $page)
     {
         try {
-            return view('page::admin.show', compact('page'));
+            $seo = $this->getSeo($page);
+            return view('page::admin.show', compact('page', 'seo'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load pages: ' . $e->getMessage());
         }
