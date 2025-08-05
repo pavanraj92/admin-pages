@@ -46,7 +46,9 @@
                     </div>
                 </div>
             </div>
-            @include('admin::admin.seo_meta_data.view', ['page' => $page])
+            <div class="col-md-4">
+                @include('admin::admin.seo_meta_data.view', ['seo' => $seo])
+            </div>
         </div>
         <!-- End PAge Content -->
     </div>

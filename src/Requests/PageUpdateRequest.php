@@ -14,8 +14,8 @@ class PageUpdateRequest extends FormRequest
         return [          
             'title' => 'required|string|min:3|max:100|unique:pages,title,' . $this->route('page')->id,            
             'meta_title' => 'nullable|string|max:255',
-            'meta_description' => 'nullable|string|max:255',
-            'meta_keywords' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string|max:500',
+            'meta_keywords' => 'nullable|string|max:500',
             'content' => 'required|string|min:3|max:65535',
             'status' => 'required|in:draft,published', // Ensure status is one of the allowed values            
         ];
