@@ -33,16 +33,16 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Status<span class="text-danger">*</span></label>
                                     <select name="status" class="form-control select2" required>
-                                        <option value="draft"
-                                            {{ ($page?->status ?? old('status')) == 'draft' ? 'selected' : '' }}>Draft
-                                        </option>
-                                        <option value="published"
-                                            {{ ($page?->status ?? old('status')) == 'published' ? 'selected' : '' }}>
-                                            Published</option>
+                                        @foreach (config('pages.constants.status', []) as $key => $label)
+                                            <option value="{{ $key }}"
+                                                {{ (isset($page) && $page?->status == $key) || old('status') == $key ? 'selected' : '' }}>
+                                                {{ $label }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                     @error('status')
                                         <div class="text-danger validation-error">{{ $message }}</div>
