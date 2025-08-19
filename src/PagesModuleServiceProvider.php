@@ -30,10 +30,9 @@ class PagesModuleServiceProvider extends ServiceProvider
         if (is_dir(base_path('Modules/Pages/database/migrations'))) {
             $this->loadMigrationsFrom(base_path('Modules/Pages/database/migrations'));
         }
-        $this->mergeConfigFrom(__DIR__ . '/../config/pages.php', 'pages.config');
         // Also merge config from published module if it exists
         if (file_exists(base_path('Modules/Pages/config/pages.php'))) {
-            $this->mergeConfigFrom(base_path('Modules/Pages/config/pages.php'), 'pages.config');
+            $this->mergeConfigFrom(base_path('Modules/Pages/config/pages.php'), 'pages.constants');
         }
         
         // Only publish automatically during package installation, not on every request
