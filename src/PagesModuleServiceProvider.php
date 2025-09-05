@@ -19,7 +19,13 @@ class PagesModuleServiceProvider extends ServiceProvider
             __DIR__ . '/../resources/views'      // Package views as fallback
         ], 'page');
 
-        $this->mergeConfigFrom(__DIR__.'/../config/pages.php', 'pages.constants');
+        // Load published module config first (if it exists), then fallback to package config
+        if (file_exists(base_path('Modules/Pages/config/pages.php'))) {
+            $this->mergeConfigFrom(base_path('Modules/Pages/config/pages.php'), 'pages.constants');
+        } else {
+            // Fallback to package config if published config doesn't exist
+            $this->mergeConfigFrom(__DIR__.'/../config/pages.php', 'pages.constants');
+        }
         
         // Also register module views with a specific namespace for explicit usage
         if (is_dir(base_path('Modules/Pages/resources/views'))) {
@@ -29,10 +35,6 @@ class PagesModuleServiceProvider extends ServiceProvider
         // Also load migrations from published module if they exist
         if (is_dir(base_path('Modules/Pages/database/migrations'))) {
             $this->loadMigrationsFrom(base_path('Modules/Pages/database/migrations'));
-        }
-        // Also merge config from published module if it exists
-        if (file_exists(base_path('Modules/Pages/config/pages.php'))) {
-            $this->mergeConfigFrom(base_path('Modules/Pages/config/pages.php'), 'pages.constants');
         }
         
         // Only publish automatically during package installation, not on every request
