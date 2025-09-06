@@ -186,6 +186,12 @@ class PagesModuleServiceProvider extends ServiceProvider
             $content
         );
 
+        $content = str_replace(
+            'use admin\admin_auth\Traits\HasSeo;',
+            'use Modules\\AdminAuth\\app\\Traits\\HasSeo;',
+            $content
+        );
+
         return $content;
     }
 
@@ -195,6 +201,11 @@ class PagesModuleServiceProvider extends ServiceProvider
     protected function transformModelNamespaces($content)
     {
         // Any model-specific transformations
+        $content = str_replace(
+            'use admin\admin_auth\Models\Seo;',
+            'use Modules\\AdminAuth\\app\\Models\\Seo;',
+            $content
+        );
         return $content;
     }
 
