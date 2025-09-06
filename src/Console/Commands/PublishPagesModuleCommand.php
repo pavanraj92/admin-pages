@@ -98,6 +98,18 @@ class PublishPagesModuleCommand extends Command
             $content = str_replace('use admin\\pages\\Models\\Page;', 'use Modules\\Pages\\app\\Models\\Page;', $content);
             $content = str_replace('use admin\\pages\\Requests\\PageCreateRequest;', 'use Modules\\Pages\\app\\Http\\Requests\\PageCreateRequest;', $content);
             $content = str_replace('use admin\\pages\\Requests\\PageUpdateRequest;', 'use Modules\\Pages\\app\\Http\\Requests\\PageUpdateRequest;', $content);
+            $content = str_replace(
+                'use admin\admin_auth\Traits\HasSeo;',
+                'use Modules\\AdminAuth\\app\\Traits\\HasSeo;',
+                $content
+            );
+        } elseif (str_contains($sourceFile, 'Models')) {
+            // Transform admin_auth namespaces in models
+            $content = str_replace(
+                'use admin\admin_auth\Models\Seo;',
+                'use Modules\\AdminAuth\\app\\Models\\Seo;',
+                $content
+            );
         }
 
         return $content;
