@@ -33,7 +33,7 @@
                                     @enderror
                                 </div>
                             </div>
-                             <div class="col-md-6">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Status<span class="text-danger">*</span></label>
                                     <select name="status" class="form-control select2" required>
@@ -77,46 +77,32 @@
     </div>
 @endsection
 
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
-    <!-- Select2 CSS & JS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <!-- Custom CSS for the page -->
-    <link rel="stylesheet" href="{{ asset('backend/custom.css') }}">
-@endpush
-
 @push('scripts')
-    <!-- Then the jQuery Validation plugin -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
-    <!-- Include the CKEditor script -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
-    <!-- Select2 CSS & JS -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
     <!-- Initialize CKEditor -->
     <script>
-        let ckEditorInstance;
-
-        ClassicEditor
-            .create(document.querySelector('#content'))
-            .then(editor => {
-                ckEditorInstance = editor;
-
-                // optional styling
-                editor.ui.view.editable.element.style.minHeight = '250px';
-                editor.ui.view.editable.element.style.maxHeight = '250px';
-                editor.ui.view.editable.element.style.overflowY = 'auto';
-
-                // 🔥 Trigger validation on typing
-                editor.model.document.on('change:data', () => {
-                    const contentVal = editor.getData();
-                    $('#content').val(contentVal); // keep textarea updated
-                    $('#content').trigger('keyup'); // trigger validation manually
-                });
-            })
-            .catch(error => {
-                console.error(error);
+        $(document).ready(function() {
+            $('#content').summernote({
+                height: 250, // ✅ editor height
+                minHeight: 250,
+                maxHeight: 250,
+                toolbar: [
+                    // ✨ Add "code view" toggle button
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link', 'picture']],
+                    ['view', ['codeview']] // ✅ source code button
+                ],
+                callbacks: {
+                    onChange: function(contents, $editable) {
+                        // keep textarea updated
+                        $('#content').val(contents);
+                        // trigger validation if needed
+                        $('#content').trigger('keyup');
+                    }
+                }
             });
+        });
     </script>
 
     <script>
@@ -155,9 +141,8 @@
                 },
                 submitHandler: function(form) {
                     // Update textarea before submit
-                    if (ckEditorInstance) {
-                        $('#content').val(ckEditorInstance.getData());
-                    }
+                    $('#content').val($('#content').summernote('code'));
+
                     const $btn = $('#saveBtn');
                     if ($btn.text().trim().toLowerCase() === 'update') {
                         $btn.prop('disabled', true).text('Updating...');
@@ -173,7 +158,7 @@
                 errorPlacement: function(error, element) {
                     $('.validation-error').hide(); // hide blade errors
                     if (element.attr("id") === "content") {
-                        error.insertAfter($('.ck-editor')); // show below CKEditor UI
+                        error.insertAfter($('.note-editor'));
                     } else {
                         error.insertAfter(element);
                     }
